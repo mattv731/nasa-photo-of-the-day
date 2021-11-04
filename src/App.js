@@ -1,30 +1,28 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios'
-
-import "./App.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
+import Photo from './Photo'
+// import PreLoadScreen from './components/PreLoadScreen';
 
 function App() {
-  const [ photo, setPhoto ] = useState();
-  // Get the information from the web and pass them down to the children components.
-
+  const [data, setData] = useState('');
+  
   useEffect(() => {
-    axios.get(`https://api.nasa.gov/planetary/apod`)
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.error(err)
-    })
-  }, [])
-
+      axios.get(`https://api.nasa.gov/planetary/apod?api_key=WnIQ9X2dt6H6A3zTOii6MKCZC40hlHt0R5JpHSXA
+      `)
+      .then(resp => {
+        setData(resp.data)  
+      })
+      .catch(err => {
+          console.error('error')
+      })
+  
+  }, []);
   return (
     <div className="App">
-      <h1>Nasa Photo(s) of the Day </h1>
-      <p>
-        Read through the instructions in the README.md file to build your NASA
-        app! Have fun <span role="img" aria-label='go!'>🚀</span>!
-      </p>
-    </div>
+      <h1>Nasa's Photo of the Day!</h1>
+      <Photo data={data}/>
+      </div>
   );
 }
 
